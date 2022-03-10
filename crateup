@@ -1,0 +1,11 @@
+#! /usr/bin/zsh
+
+
+# I'll refactor when I refactor smh
+SEARCH_QUERY=$(echo $1 | awk '{sub(" ", "+")}1' - )
+QUERY_URL="https://lib.rs/search?q=$SEARCH_QUERY"
+RAW_CRATES=$( curl -s $QUERY_URL | grep -Ew "\<h4\>" )
+CRATE_LIST=$( echo $RAW_CRATES | awk 'NR>2 {print last} {last=$0}' - )
+CRATES=$(echo $CRATE_LIST| awk '{sub("<h4>", "") sub("</h4>", "")}1' - | head -n 10)
+
+echo $CRATES
