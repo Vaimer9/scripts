@@ -1,0 +1,4 @@
+#! /usr/bin/zsh
+
+sudo rm /usr/bin/$1
+sudo cp $1 /usr/bin
